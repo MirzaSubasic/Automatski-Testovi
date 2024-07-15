@@ -1,38 +1,51 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.PageObjects;
 
 namespace Automatski_Testovi.Pages
 {
     internal class InventoryPage
     {
         private IWebDriver driver;
+        private WebDriverWait wait;
 
         public InventoryPage(IWebDriver driver)
-        {  
+        {
             this.driver = driver;
         }
-        
-        private IWebElement AddBackpackToCartButton => driver.FindElement(By.Id("add-to-cart-sauce-labs-backpack"));
-        private IWebElement RemoveBackpackFromCartButton => driver.FindElement(By.Id("remove-sauce-labs-backpack"));
-        private IWebElement CartBadge => driver.FindElement(By.ClassName("shopping_cart_badge"));
+
+        private IWebElement cartBadge => driver.FindElement(By.ClassName("shopping_cart_badge"));
+        private IReadOnlyCollection<IWebElement> inventory => driver.FindElements(By.ClassName("inventory_item"));
 
         public void AddBackpackToCart() 
         {
-            AddBackpackToCartButton.Click();
+            //AddBackpackToCartButton.Click();
+            IReadOnlyCollection<IWebElement> products = driver.FindElements(By.XPath("//*[@id=\"inventory_container\"]"));
+            foreach (IWebElement product in products) 
+            {
+                product.FindElement(By.ClassName("add-to-cart-sauce-labs-backpack")).Click();
+                break;
+            }
         }
 
         public string VerifyTextForRemoveFromCartButton()
-        { 
-            return RemoveBackpackFromCartButton.Text;
+        {
+            IReadOnlyCollection<IWebElement> products = driver.FindElements(By.XPath("//*[@id=\"inventory_container\"]"));
+            foreach (IWebElement product in products)
+            {
+                return product.FindElement(By.ClassName("remove-sauce-labs-backpack")).Text;
+            }
+            return "";
         }
 
         public void GoToCart() 
         {
-            CartBadge.Click();
+            cartBadge.Click();
+        }
+
+        public IReadOnlyCollection<IWebElement> GetElements()
+        {
+            return inventory;
         }
     }
 }

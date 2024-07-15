@@ -23,6 +23,7 @@ namespace Automatski_Testovi.Tests
             driver = new ChromeDriver(chromedirectory, options);
 
             loginPage = new LoginPage(driver);
+            inventoryPage = new InventoryPage(driver);
         }
 
         [Test]
@@ -35,12 +36,33 @@ namespace Automatski_Testovi.Tests
         [Test]
         public void TestLoginFinctionality()
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             
             loginPage.EnterLoginCredentials(staticData.StandardUser, staticData.Password);
             loginPage.ClickLoginButton();
 
             Assert.That(driver.Url, Does.Contain(staticData.InventoryURL));
+        }
+
+        [Test]
+        public void VerifyInventoryItems()
+        {
+            var items = inventoryPage.GetElements();
+            Assert.That(items.Count, Is.EqualTo(6));
+        }
+
+
+        [Test]
+        public void TestAddToCart()
+        {
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+            inventoryPage.AddBackpackToCart();
+
+            string buttonText = inventoryPage.VerifyTextForRemoveFromCartButton();
+
+            Assert.That(buttonText, Does.Contain("Remove"));
         }
 
         [OneTimeTearDown]
