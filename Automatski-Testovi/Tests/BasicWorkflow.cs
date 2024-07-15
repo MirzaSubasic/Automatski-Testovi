@@ -55,11 +55,9 @@ namespace Automatski_Testovi.Tests
         [Test]
         public void TestAddToCart()
         {
-
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-
+            Thread.Sleep(1000);
             inventoryPage.AddBackpackToCart();
-
+            Thread.Sleep(1000);
             string buttonText = inventoryPage.VerifyTextForRemoveFromCartButton();
 
             Assert.That(buttonText, Does.Contain("Remove"));
