@@ -5,21 +5,19 @@ namespace Automatski_Testovi.Pages
 {
     public class LoginPage : BaseClass
     {
-        public LoginPage(IWebDriver driver)
+        public LoginPage(IWebDriver driver) : base(driver)
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
         }
 
         private void EnterLoginCredentials(string UserName, string password)
         {
-            UsernameField.SendKeys(UserName);
-            PasswordField.SendKeys(password);
+            usernameField.SendKeys(UserName);
+            passwordField.SendKeys(password);
         }
 
         private void ClickLoginButton()
         {
-            LoginButton.Click();
+            loginButton.Click();
         }
 
         public void LogIn(string UserName, string password)
@@ -27,7 +25,6 @@ namespace Automatski_Testovi.Pages
             driver.Navigate().GoToUrl(staticData.LoginURL);
             EnterLoginCredentials(staticData.StandardUser, staticData.Password);
             ClickLoginButton();
-
         }
 
     }

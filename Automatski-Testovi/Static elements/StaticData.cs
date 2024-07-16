@@ -16,5 +16,13 @@
         public string LoginURL { get; set; } = "https://www.saucedemo.com/";
         public string InventoryURL { get; set; } = "https://www.saucedemo.com/inventory.html";
         public string CartUrl { get; set; } = "https://www.saucedemo.com/cart.html";
+        public string CheckoutUrl { get; set; } = "https://www.saucedemo.com/checkout-step-one.html";
+        public string CheckoutStepOneUrl { get; set; } = "https://www.saucedemo.com/checkout-step-one.html";
+        public string CheckoutStepTwoUrl { get; set; } = "https://www.saucedemo.com/checkout-step-two.html";
+
+
+        public string FirstName { get; set; } = "Mirza";
+        public string LastName { get; set; } = "Subasic";
+        public string PostalCode { get; set; } = "71000";
     }
 }

@@ -1,19 +1,30 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 
 
 namespace Automatski_Testovi.Pages
 {
     public class InventoryPage : BaseClass
     {
-        public InventoryPage(IWebDriver driver)
+        public InventoryPage(IWebDriver driver) : base(driver)
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+        }
+
+        private void RemoveIfExists() 
+        {
+            try 
+            {
+                removeBackpackFromCartButton.Click();
+            }
+            catch 
+            {
+                Console.WriteLine("Nothing is selected");
+            }
         }
 
         public void AddBackpackToCart()
         {
+            //ako se desi da je element ostao odabran prvo ce probati da klikne Remove buton pa onda radi test za add to cart
+            RemoveIfExists();
             addBackpackToCartButton.Click();
         }
 

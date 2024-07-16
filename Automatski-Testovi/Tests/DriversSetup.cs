@@ -10,6 +10,8 @@ namespace Automatski_Testovi.Tests
         public IWebDriver driver;
         public LoginPage? loginPage;
         public InventoryPage? inventoryPage;
+        public CartPage? cartPage;
+        public CheckoutStepOnePage checkoutStepOnePage;
         public StaticData? staticData;
 
         [OneTimeSetUp]
@@ -22,6 +24,8 @@ namespace Automatski_Testovi.Tests
 
             loginPage = new LoginPage(driver);
             inventoryPage = new InventoryPage(driver);
+            cartPage = new CartPage(driver);
+            checkoutStepOnePage = new CheckoutStepOnePage(driver);
             staticData = new StaticData();
         }
 

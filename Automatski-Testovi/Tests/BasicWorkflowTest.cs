@@ -1,8 +1,5 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+
 using Automatski_Testovi.Pages;
-using OpenQA.Selenium.Support.UI;
-using Automatski_Testovi.Static_elements;
 
 namespace Automatski_Testovi.Tests
 {
@@ -11,7 +8,7 @@ namespace Automatski_Testovi.Tests
     {
 
         [Test]
-        public void VerifyInventoryItems()
+        public void InventoryItemsTest()
         {
             loginPage.LogIn(staticData.StandardUser, staticData.Password);
 
@@ -22,9 +19,11 @@ namespace Automatski_Testovi.Tests
         }
 
         [Test]
-        public void TestAddToCart()
+        public void AddToCartTest()
         {
             loginPage.LogIn(staticData.StandardUser, staticData.Password);
+
+            Thread.Sleep(1000);
 
             inventoryPage.AddBackpackToCart();
 
@@ -34,13 +33,50 @@ namespace Automatski_Testovi.Tests
         }
 
         [Test]
-        public void GoToCart() 
+        public void GoToCartTest() 
         {
             loginPage.LogIn(staticData.StandardUser, staticData.Password);
 
             inventoryPage.GoToCartBadgeClick();
 
             Assert.That(driver.Url, Does.Contain(staticData.CartUrl));
+        }
+
+        [Test]
+        public void ItemExistsInCartTest()
+        {
+            var removeButtonText = cartPage?.FindRemoveButtonText();
+
+            Assert.That(removeButtonText, Does.Contain("Remove"));
+        }
+
+        [Test]
+        public void ClickCheckoutButtonAndVerifyUrlTest()
+        {
+            cartPage.GoToCheckoutButtonClick();
+
+            Assert.That(driver.Url, Does.Contain(staticData.CheckoutUrl));
+        }
+
+        [Test]
+        public void CorrectInputIsEnteredInCheckoutTest()
+        {
+            checkoutStepOnePage.FillData(staticData.FirstName, staticData.LastName, staticData.PostalCode);
+
+            Assert.That(staticData.FirstName, Does.Contain(checkoutStepOnePage.GetFirstName())); 
+            Assert.That(staticData.LastName, Does.Contain(checkoutStepOnePage.GetLastName()));
+            Assert.That(staticData.PostalCode, Does.Contain(checkoutStepOnePage.GetPostalCode()));
+
+        }
+
+        [Test]
+        public void FillDataInCheckoutTest()
+        {
+            checkoutStepOnePage.FillData(staticData.FirstName, staticData.LastName, staticData.PostalCode);
+            
+            checkoutStepOnePage.ClickContiniueButton();
+
+            Assert.That(driver.Url, Does.Contain(staticData.CheckoutStepTwoUrl));
         }
 
     }
