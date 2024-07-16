@@ -45,16 +45,17 @@ namespace Automatski_Testovi.Pages
         public IWebElement removeBackpackFromCartButton;
 
 
+
         //CART
 
         [FindsBy(How = How.XPath, Using = "//*[@class=\"btn btn_secondary btn_small cart_button\"]")]
         public IWebElement getRemoveButtonInCart;
 
         [FindsBy(How = How.Id, Using = "checkout")]
-        public IWebElement CheckoutButton;
+        public IWebElement checkoutButton;
 
 
-        //CHECKOUT STEP INE
+        //CHECKOUT STEP ONE
 
         [FindsBy(How = How.Id, Using = "first-name")]
         public IWebElement firstNameField;
@@ -67,5 +68,19 @@ namespace Automatski_Testovi.Pages
 
         [FindsBy(How = How.Id, Using = "continue")]
         public IWebElement continiueButton;
+
+
+        //CHECKOUT STEP TWO
+
+        [FindsBy(How = How.XPath, Using = "//*[@id=\"finish\"]")]
+        public IWebElement finishOrderButton;
+
+        [FindsBy(How = How.XPath, Using = "//*[@class='summary_total_label']")]
+        public IWebElement getTotalPrice;
+
+
+        //COMPLETED ORDER
+        [FindsBy(How = How.Id, Using = "back-to-products")]
+        public IWebElement backToHomeButton;
     }
 }

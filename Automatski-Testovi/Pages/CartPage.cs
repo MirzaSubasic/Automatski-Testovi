@@ -34,7 +34,7 @@ namespace Automatski_Testovi.Pages
         public void GoToCheckoutButtonClick()
         {
             GetPreviousSteps();
-            CheckoutButton.Click();
+            checkoutButton.Click();
         }
     }
 }

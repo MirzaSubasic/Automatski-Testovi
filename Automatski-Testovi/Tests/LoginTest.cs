@@ -15,11 +15,10 @@ namespace Automatski_Testovi.Tests
         [Test]
         public void TestLoginFinctionality()
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-
             loginPage.LogIn(staticData.StandardUser, staticData.Password);
 
             Assert.That(driver.Url, Does.Contain(staticData.InventoryURL));
         }
+
     }
 }

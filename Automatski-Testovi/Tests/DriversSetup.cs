@@ -12,6 +12,8 @@ namespace Automatski_Testovi.Tests
         public InventoryPage? inventoryPage;
         public CartPage? cartPage;
         public CheckoutStepOnePage checkoutStepOnePage;
+        public CheckoutStepTwoPage checkoutStepTwoPage;
+        public CheckoutCompletePage checkoutCompletePage;
         public StaticData? staticData;
 
         [OneTimeSetUp]
@@ -26,6 +28,8 @@ namespace Automatski_Testovi.Tests
             inventoryPage = new InventoryPage(driver);
             cartPage = new CartPage(driver);
             checkoutStepOnePage = new CheckoutStepOnePage(driver);
+            checkoutStepTwoPage = new CheckoutStepTwoPage(driver);
+            checkoutCompletePage = new CheckoutCompletePage(driver);
             staticData = new StaticData();
         }
 

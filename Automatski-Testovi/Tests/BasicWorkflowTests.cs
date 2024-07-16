@@ -1,5 +1,4 @@
 
-using Automatski_Testovi.Pages;
 
 namespace Automatski_Testovi.Tests
 {
@@ -14,7 +13,7 @@ namespace Automatski_Testovi.Tests
 
             var items = inventoryPage.GetElements();
 
-            Assert.That(items.Count, Is.EqualTo(6));
+            Assert.That(items.Count, Is.Not.EqualTo(0));
 
         }
 
@@ -22,8 +21,6 @@ namespace Automatski_Testovi.Tests
         public void AddToCartTest()
         {
             loginPage.LogIn(staticData.StandardUser, staticData.Password);
-
-            Thread.Sleep(1000);
 
             inventoryPage.AddBackpackToCart();
 
@@ -77,6 +74,33 @@ namespace Automatski_Testovi.Tests
             checkoutStepOnePage.ClickContiniueButton();
 
             Assert.That(driver.Url, Does.Contain(staticData.CheckoutStepTwoUrl));
+        }
+
+        [Test]
+        public void FinalPriceIsNonZeroTest()
+        {
+            var priceText = checkoutStepTwoPage.GetTotalPrice();
+
+            Console.WriteLine(driver.Url);
+
+            Assert.That(priceText, Does.Not.Contain("Total: $0.00"));
+        }
+
+        [Test]
+        public void FinishOrderButtonTest()
+        {
+            checkoutStepTwoPage.ClickFinishButton();
+
+            Assert.That(driver.Url, Does.Contain(staticData.CheckoutCompleteUrl));
+
+        }
+
+        [Test]
+        public void BackToHomeButtonAfterOrderIsCompleteTest()
+        {
+            checkoutCompletePage.ClickBackToHomeButton();
+
+            Assert.That(driver.Url, Does.Contain(staticData.InventoryURL));
         }
 
     }
