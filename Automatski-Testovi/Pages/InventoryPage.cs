@@ -7,10 +7,10 @@ namespace Automatski_Testovi.Pages
     public class InventoryPage : BaseClass
     {
         public InventoryPage(IWebDriver driver)
-            {
-                this.driver = driver;
-                PageFactory.InitElements(driver, this);
-            }
+        {
+            this.driver = driver;
+            PageFactory.InitElements(driver, this);
+        }
 
         public void AddBackpackToCart()
         {
@@ -31,5 +31,7 @@ namespace Automatski_Testovi.Pages
         {
             return inventory;
         }
+
+        
     }
 }

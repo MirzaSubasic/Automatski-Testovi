@@ -11,15 +11,23 @@ namespace Automatski_Testovi.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public void EnterLoginCredentials(string UserName, string password)
+        private void EnterLoginCredentials(string UserName, string password)
         {
             UsernameField.SendKeys(UserName);
             PasswordField.SendKeys(password);
         }
 
-        public void ClickLoginButton()
+        private void ClickLoginButton()
         {
             LoginButton.Click();
+        }
+
+        public void LogIn(string UserName, string password)
+        {
+            driver.Navigate().GoToUrl(staticData.LoginURL);
+            EnterLoginCredentials(staticData.StandardUser, staticData.Password);
+            ClickLoginButton();
+
         }
 
     }

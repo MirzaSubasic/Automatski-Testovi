@@ -7,48 +7,16 @@ using Automatski_Testovi.Static_elements;
 namespace Automatski_Testovi.Tests
 {
     [TestFixture]
-    public class Tests
+    public class Tests: DriversSetup
     {
-        private IWebDriver driver;
-        private LoginPage? loginPage;
-        private InventoryPage? inventoryPage;
-        private StaticData? staticData;
-
-        [OneTimeSetUp]
-        public void Setup()
-        {
-            var chromedirectory = Directory.GetCurrentDirectory();
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            driver = new ChromeDriver(chromedirectory, options);
-
-            loginPage = new LoginPage(driver);
-            inventoryPage = new InventoryPage(driver);
-            staticData = new StaticData();
-        }
-
-        [Test]
-        public void TestLoadingOfLoginPage()
-        {
-            driver.Navigate().GoToUrl(staticData.LoginURL);
-            Assert.That(driver.Title, Does.Contain("Swag Labs"));
-        }
-
-        [Test]
-        public void TestLoginFinctionality()
-        {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            
-            loginPage.EnterLoginCredentials(staticData.StandardUser, staticData.Password);
-            loginPage.ClickLoginButton();
-
-            Assert.That(driver.Url, Does.Contain(staticData.InventoryURL));
-        }
 
         [Test]
         public void VerifyInventoryItems()
         {
+            loginPage.LogIn(staticData.StandardUser, staticData.Password);
+
             var items = inventoryPage.GetElements();
+
             Assert.That(items.Count, Is.EqualTo(6));
 
         }
@@ -56,11 +24,9 @@ namespace Automatski_Testovi.Tests
         [Test]
         public void TestAddToCart()
         {
-            driver.Navigate().GoToUrl(staticData.InventoryURL);
-            Console.WriteLine(driver.Url.ToString());
+            loginPage.LogIn(staticData.StandardUser, staticData.Password);
 
             inventoryPage.AddBackpackToCart();
-            Console.WriteLine(driver.Url);
 
             string buttonText = inventoryPage.VerifyTextForRemoveFromCartButton();
 
@@ -70,18 +36,11 @@ namespace Automatski_Testovi.Tests
         [Test]
         public void GoToCart() 
         {
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            loginPage.LogIn(staticData.StandardUser, staticData.Password);
 
             inventoryPage.GoToCartBadgeClick();
 
             Assert.That(driver.Url, Does.Contain(staticData.CartUrl));
-        }
-
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            driver?.Dispose();
         }
 
     }

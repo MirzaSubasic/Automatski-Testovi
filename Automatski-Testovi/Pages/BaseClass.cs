@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
 using SeleniumExtras.PageObjects;
+using Automatski_Testovi.Static_elements;
 
 namespace Automatski_Testovi.Pages
 {
@@ -8,6 +9,7 @@ namespace Automatski_Testovi.Pages
     {
         public IWebDriver driver;
         public WebDriverWait wait;
+        public StaticData staticData = new StaticData();
 
         //LOGIN PAGE
         [FindsBy(How = How.Id, Using = "user-name")]
@@ -21,7 +23,7 @@ namespace Automatski_Testovi.Pages
 
         //INVENTORY / HOME PAGE
 
-        [FindsBy(How = How.Id, Using = "shopping_cart_link")]
+        [FindsBy(How = How.XPath, Using = "//*[@class=\"shopping_cart_link\"]")]
         public IWebElement cartBadge;
 
         [FindsBy(How = How.ClassName, Using = "inventory_item")]
