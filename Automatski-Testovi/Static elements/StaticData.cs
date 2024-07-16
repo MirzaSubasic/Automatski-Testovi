@@ -1,6 +1,6 @@
 ﻿namespace Automatski_Testovi.Static_elements
 {
-    internal class StaticData
+    public class StaticData
     {
         public string StandardUser { get; set; } = "standard_user";
         public string LockedOutUser { get; set; } = "locked_out_user";
@@ -15,5 +15,6 @@
 
         public string LoginURL { get; set; } = "https://www.saucedemo.com/";
         public string InventoryURL { get; set; } = "https://www.saucedemo.com/inventory.html";
+        public string CartUrl { get; set; } = "https://www.saucedemo.com/cart.html";
     }
 }

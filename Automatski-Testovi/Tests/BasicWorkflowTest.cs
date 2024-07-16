@@ -4,15 +4,15 @@ using Automatski_Testovi.Pages;
 using OpenQA.Selenium.Support.UI;
 using Automatski_Testovi.Static_elements;
 
-
 namespace Automatski_Testovi.Tests
 {
+    [TestFixture]
     public class Tests
     {
         private IWebDriver driver;
         private LoginPage? loginPage;
         private InventoryPage? inventoryPage;
-        private StaticData? staticData = new StaticData();
+        private StaticData? staticData;
 
         [OneTimeSetUp]
         public void Setup()
@@ -24,6 +24,7 @@ namespace Automatski_Testovi.Tests
 
             loginPage = new LoginPage(driver);
             inventoryPage = new InventoryPage(driver);
+            staticData = new StaticData();
         }
 
         [Test]
@@ -49,19 +50,33 @@ namespace Automatski_Testovi.Tests
         {
             var items = inventoryPage.GetElements();
             Assert.That(items.Count, Is.EqualTo(6));
-        }
 
+        }
 
         [Test]
         public void TestAddToCart()
         {
-            Thread.Sleep(1000);
+            driver.Navigate().GoToUrl(staticData.InventoryURL);
+            Console.WriteLine(driver.Url.ToString());
+
             inventoryPage.AddBackpackToCart();
-            Thread.Sleep(1000);
+            Console.WriteLine(driver.Url);
+
             string buttonText = inventoryPage.VerifyTextForRemoveFromCartButton();
 
             Assert.That(buttonText, Does.Contain("Remove"));
         }
+
+        [Test]
+        public void GoToCart() 
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+
+            inventoryPage.GoToCartBadgeClick();
+
+            Assert.That(driver.Url, Does.Contain(staticData.CartUrl));
+        }
+
 
         [OneTimeTearDown]
         public void TearDown()
