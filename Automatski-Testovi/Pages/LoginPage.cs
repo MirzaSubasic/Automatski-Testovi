@@ -19,22 +19,12 @@ namespace Automatski_Testovi.Pages
         {
         }
 
-        private void EnterLoginCredentials(string UserName, string password)
-        {
-            usernameField.SendKeys(UserName);
-            passwordField.SendKeys(password);
-        }
-
-        private void ClickLoginButton()
-        {
-            loginButton.Click();
-        }
 
         public void LogIn(string UserName, string password)
         {
-            driver.Navigate().GoToUrl(staticData.LoginURL);
-            EnterLoginCredentials(staticData.StandardUser, staticData.Password);
-            ClickLoginButton();
+            usernameField.SendKeys(UserName);
+            passwordField.SendKeys(password);
+            loginButton.Click();
         }
 
     }
