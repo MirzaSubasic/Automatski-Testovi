@@ -1,9 +1,14 @@
 ﻿using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 
 namespace Automatski_Testovi.Pages
 {
-    public class CheckoutCompletePage : BaseClass
+    public class CheckoutCompletePage : CommonElements
     {
+
+        [FindsBy(How = How.Id, Using = "back-to-products")]
+        public IWebElement backToHomeButton;
+
         CheckoutStepOnePage checkout;
         CheckoutStepTwoPage checkout1;
         CartPage cart;

@@ -8,7 +8,7 @@ using OpenQA.Selenium.Edge;
 
 namespace Automatski_Testovi.Tests
 {
-    public class DriversSetup
+    public class BaseClass
     {
         public IWebDriver driver;
 
@@ -29,8 +29,6 @@ namespace Automatski_Testovi.Tests
         {
             ChromeDriverSetUp();
 
-            ExtentReportsSetUp();
-
             InitializeClasses();
         }
 
@@ -38,7 +36,6 @@ namespace Automatski_Testovi.Tests
         public void TearDown()
         {
             driver?.Dispose();
-            ExtentReportsTearDown();
         }
 
         private void ChromeDriverSetUp()

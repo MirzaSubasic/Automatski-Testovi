@@ -1,8 +1,11 @@
 
+using OpenQA.Selenium;
+
 namespace Automatski_Testovi.Tests
 {
     [TestFixture]
-    public class Tests: DriversSetup
+    //[Parallelizable(ParallelScope.All)]
+    public class BasicWorkflowTests: BaseClass
     {
 
         [Test]

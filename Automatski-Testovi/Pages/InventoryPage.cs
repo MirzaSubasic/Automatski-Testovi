@@ -1,9 +1,23 @@
 ﻿using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 
 namespace Automatski_Testovi.Pages
 {
-    public class InventoryPage : BaseClass
+    public class InventoryPage : CommonElements
     {
+        [FindsBy(How = How.XPath, Using = "//*[@class=\"shopping_cart_link\"]")]
+        public IWebElement cartBadge;
+
+        [FindsBy(How = How.ClassName, Using = "inventory_item")]
+        public IList<IWebElement> inventory;
+
+        [FindsBy(How = How.XPath, Using = "//*[@id=\"add-to-cart-sauce-labs-backpack\"]")]
+        public IWebElement addBackpackToCartButton;
+
+        [FindsBy(How = How.XPath, Using = "//*[@id=\"remove-sauce-labs-backpack\"]")]
+        public IWebElement removeBackpackFromCartButton;
+
+
         public InventoryPage(IWebDriver driver) : base(driver)
         {
         }

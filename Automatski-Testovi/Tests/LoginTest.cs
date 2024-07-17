@@ -1,7 +1,7 @@
 ﻿
 namespace Automatski_Testovi.Tests
 {
-    public class LoginTest : DriversSetup
+    public class LoginTest : BaseClass
     {
 
         [Test]

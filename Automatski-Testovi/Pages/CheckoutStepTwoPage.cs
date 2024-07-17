@@ -1,9 +1,16 @@
 ﻿using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
 
 namespace Automatski_Testovi.Pages
 {
-    public class CheckoutStepTwoPage : BaseClass
+    public class CheckoutStepTwoPage : CommonElements
     {
+
+        [FindsBy(How = How.XPath, Using = "//*[@id=\"finish\"]")]
+        public IWebElement finishOrderButton;
+
+        [FindsBy(How = How.XPath, Using = "//*[@class='summary_total_label']")]
+        public IWebElement getTotalPrice;
 
         public CheckoutStepTwoPage(IWebDriver driver) : base(driver)
         {
