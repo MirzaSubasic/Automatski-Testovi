@@ -2,6 +2,9 @@
 using Automatski_Testovi.Static_elements;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Edge;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Remote;
 
 namespace Automatski_Testovi.Tests
 {
@@ -17,12 +20,9 @@ namespace Automatski_Testovi.Tests
         public StaticData? staticData;
 
         [OneTimeSetUp]
-        public void ChromeDriversSetup() 
+        public void Setup() 
         {
-            var chromedirectory = Directory.GetCurrentDirectory();
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--start-maximized");
-            driver = new ChromeDriver(chromedirectory, options);
+            EdgeDriverSetUp();
 
             loginPage = new LoginPage(driver);
             inventoryPage = new InventoryPage(driver);
@@ -37,6 +37,22 @@ namespace Automatski_Testovi.Tests
         public void TearDown()
         {
             driver?.Dispose();
+        }
+
+        private void ChromeDriverSetUp()
+        {
+            var chromedirectory = Directory.GetCurrentDirectory();
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--start-maximized");
+            driver = new ChromeDriver(chromedirectory, options);
+        }
+
+
+        private void EdgeDriverSetUp()
+        {
+            var options = new EdgeOptions();
+            options.AddArgument("--start-maximized");
+            driver = new EdgeDriver(options);
         }
     }
 }
