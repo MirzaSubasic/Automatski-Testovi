@@ -30,4 +30,4 @@ Pages folder sadrži fajlove koji upravljaju pojedinačnim stranicama u demo str
 
 U Static elements folderu je fajl sa svim testnim podacima koji se koriste u testovima i ne bi se trebali mijenjati. 
 
-U Tests folderu su svi testovi. DriverSetup.cs je bazna klasa koju extendaju testovi i koristi se za postavljanje drajvera. BasicWorkflowTests.cs predstavlja osnovni put ili "Happy path". Kreće sa log in, odabirom itema, odlazak u korpu, kupovina odabranog itema i na kraju log out.
+U Tests folderu su svi testovi. DriverSetup.cs je bazna klasa koju extendaju testovi i koristi se za postavljanje drajvera. BasicWorkflowTests.cs predstavlja osnovni put ili "Happy path". Kreće sa log in, odabirom itema, odlazak u korpu, kupovina odabranog itema i vraćanje na home page.  
