@@ -37,7 +37,6 @@ namespace Automatski_Testovi.Tests
         public void TearDown()
         {
             driver?.Dispose();
-            driver.Quit();
         }
     }
 }
