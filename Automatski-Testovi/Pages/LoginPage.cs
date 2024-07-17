@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.PageObjects;
 
 namespace Automatski_Testovi.Pages
 {

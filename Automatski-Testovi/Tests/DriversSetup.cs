@@ -3,8 +3,6 @@ using Automatski_Testovi.Static_elements;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Remote;
 
 namespace Automatski_Testovi.Tests
 {
@@ -22,7 +20,7 @@ namespace Automatski_Testovi.Tests
         [OneTimeSetUp]
         public void Setup() 
         {
-            EdgeDriverSetUp();
+            ChromeDriverSetUp();
 
             loginPage = new LoginPage(driver);
             inventoryPage = new InventoryPage(driver);

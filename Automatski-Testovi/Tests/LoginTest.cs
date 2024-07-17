@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium.Support.UI;
-
+﻿
 namespace Automatski_Testovi.Tests
 {
     public class LoginTest : DriversSetup

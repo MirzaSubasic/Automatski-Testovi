@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 
-
 namespace Automatski_Testovi.Pages
 {
     public class InventoryPage : BaseClass
