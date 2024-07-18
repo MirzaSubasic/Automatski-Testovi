@@ -5,6 +5,8 @@ using AventStack.ExtentReports.Reporter;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
+using NUnit.Framework;
+using System.IO;
 
 namespace Automatski_Testovi.Tests
 {
@@ -12,9 +14,9 @@ namespace Automatski_Testovi.Tests
     {
         public IWebDriver driver;
 
-        private static ExtentReports extent;
-        private static ExtentHtmlReporter htmlReporter;
-        public ExtentTest test;
+        public ExtentReports extent { get; set; }
+        public ExtentV3HtmlReporter reporter { get; set; }
+        public ExtentTest test { get; set; }
 
         public LoginPage? loginPage;
         public InventoryPage? inventoryPage;
@@ -25,8 +27,10 @@ namespace Automatski_Testovi.Tests
         public StaticData? staticData;
 
         [OneTimeSetUp]
-        public void Setup() 
+        public void Setup()
         {
+            ExtentReportsSetUp();
+
             ChromeDriverSetUp();
 
             InitializeClasses();
@@ -35,6 +39,8 @@ namespace Automatski_Testovi.Tests
         [OneTimeTearDown]
         public void TearDown()
         {
+            ExtentReportsTearDown();
+
             driver?.Dispose();
         }
 
@@ -45,7 +51,6 @@ namespace Automatski_Testovi.Tests
             options.AddArgument("--start-maximized");
             driver = new ChromeDriver(chromedirectory, options);
         }
-
 
         private void EdgeDriverSetUp()
         {
@@ -67,21 +72,20 @@ namespace Automatski_Testovi.Tests
 
         private void ExtentReportsSetUp()
         {
-            string downloadsFolder = "C:\\Users\\USER_NAME\\Downloads\\".Replace("USER_NAME", Environment.UserName);
+            string filePath = $"C:\\Users\\{Environment.UserName}\\Downloads\\ExtentReport.html";
 
-            ExtentV3HtmlReporter htmlReporter = new ExtentV3HtmlReporter(downloadsFolder + "ExentReport.html");
-
+            reporter = new ExtentV3HtmlReporter(filePath);
             extent = new ExtentReports();
 
-            extent.AttachReporter(htmlReporter);
+            reporter.Config.DocumentTitle = "Automation Testing Report";
+            reporter.Config.ReportName = "Automation Testing Task";
 
-            test = extent.CreateTest(TestContext.CurrentContext.Test.Name);
+            extent.AttachReporter(reporter);
         }
 
         private void ExtentReportsTearDown()
         {
             extent.Flush();
         }
-
     }
 }
