@@ -34,3 +34,7 @@ U Static elements folderu je fajl sa svim testnim podacima koji se koriste u tes
 U Tests folderu su svi testovi. DriverSetup.cs je bazna klasa koju extendaju testovi i koristi se za postavljanje drajvera. BasicWorkflowTests.cs predstavlja osnovni put ili "Happy path". Kreće sa log in, odabirom itema, odlazak u korpu, kupovina odabranog itema i vraćanje na home page.  
 
 ExentReports se koristi za pravljenje test reporta. Trenuno je konfigurisano da se report pravi u downloads folderu.  
+
+![Screenshot 2024-07-18 124436](https://github.com/user-attachments/assets/d35fec03-153e-4356-b0a7-c04c4da8fe62)  
+
+
