@@ -29,15 +29,16 @@ namespace Automatski_Testovi.Pages
             postalCodeField.SendKeys(postalCode);
         }
 
-        public void ClickContiniueButton()
+        public void ClickContinueButton()
         {
             continiueButton.Click();
         }
 
-        public string GetFirstName() { return firstNameField.Text; }
+        public string GetFirstName() { return firstNameField.GetAttribute("value"); }
 
-        public string GetLastName() { return lastNameField.Text; } 
+        public string GetLastName() { return lastNameField.GetAttribute("value"); } 
 
-        public string GetPostalCode() { return postalCodeField.Text; }
+        public string GetPostalCode() { return postalCodeField.GetAttribute("value"); }
+
     }
 }

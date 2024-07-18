@@ -5,16 +5,16 @@ namespace Automatski_Testovi.Pages
 {
     public class InventoryPage : CommonElements
     {
-        [FindsBy(How = How.XPath, Using = "//a[@class=\"shopping_cart_link\"]")]
+        [FindsBy(How = How.XPath, Using = "//a[@class='shopping_cart_link']")]
         public IWebElement cartBadge;
 
         [FindsBy(How = How.ClassName, Using = "inventory_item")]
         public IList<IWebElement> inventory;
 
-        [FindsBy(How = How.XPath, Using = "//button[@id=\"add-to-cart-sauce-labs-backpack\"]")]
+        [FindsBy(How = How.XPath, Using = "//button[@id='add-to-cart-sauce-labs-backpack']")]
         public IWebElement addBackpackToCartButton;
 
-        [FindsBy(How = How.XPath, Using = "//button[@id=\"remove-sauce-labs-backpack\"]")]
+        [FindsBy(How = How.XPath, Using = "//button[@id='remove-sauce-labs-backpack']")]
         public IWebElement removeBackpackFromCartButton;
 
 

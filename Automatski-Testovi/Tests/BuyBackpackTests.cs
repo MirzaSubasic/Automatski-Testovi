@@ -1,4 +1,6 @@
 ﻿
+using OpenQA.Selenium;
+
 namespace Automatski_Testovi.Tests
 {
     public class BuyBackpackTests: BaseClass
@@ -15,7 +17,7 @@ namespace Automatski_Testovi.Tests
             Assert.That(driver.Url, Does.Contain(staticData.InventoryURL));
 
             //Prikazan bar jedan element
-            var items = inventoryPage.GetElements();
+            IList<IWebElement> items = inventoryPage.GetElements();
             Assert.That(items.Count, Is.Not.EqualTo(0));
 
             //Dodati ruksak u cart i provjeriti da se pojavilo Remove dugme
@@ -31,27 +33,31 @@ namespace Automatski_Testovi.Tests
             string itemInCartName = cartPage?.GetItemInCartName();
             Assert.That(itemInCartName, Does.Contain("Sauce Labs Backpack"));
 
+            //Kliknuti checkout i provjeriti je li se učitala stranica
             cartPage.GoToCheckoutButtonClick();
             Assert.That(driver.Url, Does.Contain(staticData.CheckoutUrl));
 
+            //Popunii podatke
             checkoutStepOnePage.FillData(staticData.FirstName, staticData.LastName, staticData.PostalCode);
 
-            Assert.That(staticData.FirstName, Does.Contain(checkoutStepOnePage.GetFirstName()));
-            Assert.That(staticData.LastName, Does.Contain(checkoutStepOnePage.GetLastName()));
-            Assert.That(staticData.PostalCode, Does.Contain(checkoutStepOnePage.GetPostalCode()));
+            //Provjeriti jesu li se podaci ispravno učitali
+            Assert.That(checkoutStepOnePage.GetFirstName(), Does.Contain(staticData.FirstName));
+            Assert.That(checkoutStepOnePage.GetLastName(), Does.Contain(staticData.LastName));
+            Assert.That(checkoutStepOnePage.GetPostalCode(), Does.Contain(staticData.PostalCode));
 
-            checkoutStepOnePage.ClickContiniueButton();
+            //Kliknuti continiue i provjeriti je li se učitala stranica
+            checkoutStepOnePage.ClickContinueButton();
             Assert.That(driver.Url, Does.Contain(staticData.CheckoutStepTwoUrl));
 
-
-            var priceText = checkoutStepTwoPage.GetTotalPrice();
+            //Potvrditi da cijena nije 0
+            string priceText = checkoutStepTwoPage.GetTotalPrice();
             Assert.That(priceText, Does.Not.Contain("Total: $0.00"));
 
-
+            //Naručivanje je gotovo - provjeriti je li se učitala stranica za Checkout complete
             checkoutStepTwoPage.ClickFinishButton();
             Assert.That(driver.Url, Does.Contain(staticData.CheckoutCompleteUrl));
 
-
+            //Vratiti se na početnu stranicu
             checkoutCompletePage.ClickBackToHomeButton();
             Assert.That(driver.Url, Does.Contain(staticData.InventoryURL));
         }

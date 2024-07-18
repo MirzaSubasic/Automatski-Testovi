@@ -40,7 +40,7 @@ namespace Automatski_Testovi.Tests
 
         private void ChromeDriverSetUp()
         {
-            var chromedirectory = Directory.GetCurrentDirectory();
+            string chromedirectory = Directory.GetCurrentDirectory();
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--start-maximized");
             driver = new ChromeDriver(chromedirectory, options);
@@ -49,7 +49,7 @@ namespace Automatski_Testovi.Tests
 
         private void EdgeDriverSetUp()
         {
-            var options = new EdgeOptions();
+            EdgeOptions options = new EdgeOptions();
             options.AddArgument("--start-maximized");
             driver = new EdgeDriver(options);
         }
@@ -69,7 +69,7 @@ namespace Automatski_Testovi.Tests
         {
             string downloadsFolder = "C:\\Users\\USER_NAME\\Downloads\\".Replace("USER_NAME", Environment.UserName);
 
-            var htmlReporter = new ExtentV3HtmlReporter(downloadsFolder + "ExentReport.html");
+            ExtentV3HtmlReporter htmlReporter = new ExtentV3HtmlReporter(downloadsFolder + "ExentReport.html");
 
             extent = new ExtentReports();
 
