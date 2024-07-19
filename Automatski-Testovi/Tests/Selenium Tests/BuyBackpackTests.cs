@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 
 namespace Automatski_Testovi.Tests
 {
+    [Parallelizable(ParallelScope.All)]
     public class BuyBackpackTests : BaseClass
     {
         [Test]
