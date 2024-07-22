@@ -1,5 +1,5 @@
 ﻿using Automatski_Testovi.Tests.API_Tests.Base_Class;
-using AventStack.ExtentReports;
+using Newtonsoft.Json.Linq;
 using System.Net;
 
 namespace Automatski_Testovi.Tests.API_Tests
@@ -9,24 +9,60 @@ namespace Automatski_Testovi.Tests.API_Tests
     {
 
         [Test]
-        public async Task GetActivitiesReturnsOkStatusCode()
+        public async Task GetPostsReturnsStatusCodeOk()
         {
             try
             {
-                //Upisati u report da je krenuo test
-                test = extent.CreateTest("GetActivitiesReturnsOkStatusCode").Info("GetActivitiesReturnsOkStatusCode Test Started");
+                StartTest("GetActivitiesReturnsOkStatusCode");
 
-                var response = await client.GetAsync("https://fakerestapi.azurewebsites.net/api/v1/Activities");
+                HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
 
-                // Assert
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-                test.Log(Status.Pass, "GetActivitiesReturnsOkStatusCode completed successfully");
+                LogPassingTest("GetPostsReturnsStatusCodeOk");
             }
             catch (Exception ex)
             {
-                // Ukoliko test padne uraditi log
-                test.Log(Status.Fail, ex.ToString());
-                throw;
+                LogFailingTest(ex);
+            }
+        }
+
+        [Test]
+        public async Task GetPostsReturnsNonEmptyBody()
+        {
+            try
+            {
+                StartTest("GetPostsReturnsNonEmptyBody");
+
+                HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
+
+                string responseBody = await response.Content.ReadAsStringAsync();
+                JArray posts = JArray.Parse(responseBody);
+                JObject postWithId1 = posts.FirstOrDefault(post => (int)post["id"] == 1) as JObject;
+
+                Assert.That(postWithId1, Is.Not.Null);
+                LogPassingTest("GetPostsReturnsNonEmptyBody");
+            }
+            catch (Exception ex)
+            {
+                LogFailingTest(ex);
+            }
+        }
+
+        [Test]
+        public async Task NewPostCanBeCreated()
+        {
+            try
+            {
+                StartTest("NewPostCanBeCreated");
+
+                HttpResponseMessage response = await client.PostAsync(baseUrl + "posts/1", PostContent());
+
+                Assert.That(response.StatusCode, Is.EqualTo((HttpStatusCode)HttpStatusCode.OK));
+                LogPassingTest("NewPostCanBeCreated");
+            }
+            catch (Exception ex)
+            {
+                LogFailingTest(ex);
             }
         }
 

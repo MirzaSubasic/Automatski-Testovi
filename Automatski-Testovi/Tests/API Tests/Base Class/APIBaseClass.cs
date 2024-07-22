@@ -1,5 +1,8 @@
 ﻿using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports;
+using System.Text;
+using Newtonsoft.Json;
+
 
 namespace Automatski_Testovi.Tests.API_Tests.Base_Class
 {
@@ -12,6 +15,8 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
         public ExtentReports extent { get; set; }
         public ExtentV3HtmlReporter reporter { get; set; }
         public ExtentTest test { get; set; }
+
+        public string baseUrl { get; set; } = "https://jsonplaceholder.typicode.com/";
 
         [SetUp]
         public void Setup() 
@@ -44,6 +49,36 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
         private void ExtentReportsTearDown()
         {
             extent.Flush();
+        }
+
+        protected void StartTest(string testName)
+        {
+            test = extent.CreateTest(testName).Info(testName + " Test Started");
+        }
+
+        protected void LogPassingTest(string testName)
+        {
+            test.Log(Status.Pass, testName + "completed successfully");
+        }
+
+        protected void LogFailingTest(Exception ex)
+        {
+            test.Log(Status.Fail, ex.ToString());
+        }
+
+        protected HttpContent PostContent()
+        {
+            var contentObject = new
+            {
+                title = "foo",
+                body = "bar",
+                userId = 1
+            };
+
+            string jsonContent = JsonConvert.SerializeObject(contentObject);
+            HttpContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            return content;
         }
     }
 }
