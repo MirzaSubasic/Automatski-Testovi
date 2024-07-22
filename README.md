@@ -21,7 +21,8 @@ Selenium.WebDriver.ChromeDriver (126.0.6478.12600)
 
 
 ### Demo stranica
-https://www.saucedemo.com/ 
+Selenium - https://www.saucedemo.com/   
+API testovi - https://jsonplaceholder.typicode.com/  
 
 
 ### Kratki opis koda  
@@ -31,7 +32,9 @@ Pages folder sadrži fajlove koji upravljaju pojedinačnim stranicama u demo str
 
 U Static elements folderu je fajl sa svim testnim podacima koji se koriste u testovima i ne bi se trebali mijenjati. 
 
-U Tests folderu su svi testovi. DriverSetup.cs je bazna klasa koju extendaju testovi i koristi se za postavljanje drajvera. BasicWorkflowTests.cs predstavlja osnovni put ili "Happy path". Kreće sa log in, odabirom itema, odlazak u korpu, kupovina odabranog itema i vraćanje na home page.  
+U Tests folderu su svi testovi podjeljeni u 2 foldera, API i Selenium testove.  
+Selenium testovi - DriverSetup.cs je bazna klasa koju extendaju testovi i koristi se za postavljanje drajvera. BasicWorkflowTests.cs predstavlja osnovni put ili "Happy path". Kreće sa log in, odabirom itema, odlazak u korpu, kupovina odabranog itema i vraćanje na home page.  
+API testovi - Kao i za Selenium testove bazna klasa se koristi za osnovne klase a testna klasa sadrži samo testove.  
 
 ExentReports se koristi za pravljenje test reporta. Trenuno je konfigurisano da se report pravi u downloads folderu.  
 
