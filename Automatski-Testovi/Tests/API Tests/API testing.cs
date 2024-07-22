@@ -6,7 +6,7 @@ using System.Net;
 namespace Automatski_Testovi.Tests.API_Tests
 {
     //[Parallelizable(ParallelScope.All)]
-    //[TestFixture]
+    [TestFixture]
     public class API_testing : APIBaseClass
     {
 
@@ -15,7 +15,7 @@ namespace Automatski_Testovi.Tests.API_Tests
         {
             try
             {
-                StartTest("GetPostsReturnsStatusCodeOkTest");
+                test = extent.CreateTest("GetPostsReturnsStatusCodeOkTest").Info("GetPostsReturnsStatusCodeOkTest Test Started");
 
                 HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
 
@@ -34,7 +34,7 @@ namespace Automatski_Testovi.Tests.API_Tests
         {
             try
             {
-                StartTest("GetPostsReturnsNonEmptyBodyTest");
+                test = extent.CreateTest("GetPostsReturnsNonEmptyBodyTest").Info("GetPostsReturnsNonEmptyBodyTest Test Started");
 
                 HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
 
@@ -43,6 +43,9 @@ namespace Automatski_Testovi.Tests.API_Tests
                 JObject postWithId1 = posts.FirstOrDefault(post => (int)post["id"] == 1) as JObject;
 
                 Assert.That(postWithId1, Is.Not.Null);
+                Assert.That((int)postWithId1["id"], Is.EqualTo(1));
+                Assert.That((string)postWithId1["body"], Is.EqualTo(body));
+                Assert.That((string)postWithId1["title"], Is.EqualTo(title));
                 test.Log(Status.Pass, "GetPostsReturnsNonEmptyBodyTest completed successfully");
             }
             catch (Exception ex)
@@ -57,7 +60,7 @@ namespace Automatski_Testovi.Tests.API_Tests
         {
             try
             {
-                StartTest("PostReturnsStatusCodeOkTest");
+                test = extent.CreateTest("PostReturnsStatusCodeOkTest").Info("PostReturnsStatusCodeOkTest Test Started");
 
                 HttpResponseMessage response = await client.PostAsync(baseUrl + "posts", PostContent());
 
@@ -76,7 +79,7 @@ namespace Automatski_Testovi.Tests.API_Tests
         {
             try
             {
-                StartTest("DeleteReturnsStatusCodeOkTest");
+                test = extent.CreateTest("DeleteReturnsStatusCodeOkTest").Info("DeleteReturnsStatusCodeOkTest Test Started");
 
                 HttpResponseMessage response = await client.DeleteAsync(baseUrl + "posts/1");
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));

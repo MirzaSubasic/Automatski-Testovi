@@ -2,6 +2,7 @@
 using AventStack.ExtentReports;
 using System.Text;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 namespace Automatski_Testovi.Tests.API_Tests.Base_Class
@@ -17,8 +18,10 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
         public ExtentTest test { get; set; }
 
         public string baseUrl { get; set; } = "https://jsonplaceholder.typicode.com/";
+        public string title { get; set; } = "sunt aut facere repellat provident occaecati excepturi optio reprehenderit";
+        public string body { get; set; } = "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto";
 
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup() 
         { 
             ExtentReportsSetUp();
@@ -26,7 +29,7 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
         }
 
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TearDown() 
         { 
             client.Dispose(); 
