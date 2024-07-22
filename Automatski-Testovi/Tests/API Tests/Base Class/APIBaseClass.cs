@@ -2,8 +2,7 @@
 using AventStack.ExtentReports;
 using System.Text;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
+using RestSharp;
 
 namespace Automatski_Testovi.Tests.API_Tests.Base_Class
 {
@@ -11,7 +10,9 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
     [TestFixture]
     public class APIBaseClass
     {
-        public HttpClient client;
+        //public HttpClient client;
+
+        public RestClient client;
 
         public ExtentReports extent { get; set; }
         public ExtentV3HtmlReporter reporter { get; set; }
@@ -25,7 +26,7 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
         public void Setup() 
         { 
             ExtentReportsSetUp();
-            client = new HttpClient(); 
+            client = new RestClient(); 
         }
 
 
@@ -59,19 +60,11 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
             test = extent.CreateTest(testName).Info(testName + " Test Started");
         }
 
-        protected HttpContent PostContent()
+        protected void AddParameters(RestRequest request)
         {
-            var contentObject = new
-            {
-                title = "foo",
-                body = "bar",
-                userId = 1
-            };
-
-            string jsonContent = JsonConvert.SerializeObject(contentObject);
-            HttpContent content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            return content;
+            request.AddParameter("title", "Title");
+            request.AddParameter("body", "Body 123");
+            request.AddParameter("userId", 1);
         }
     }
 }

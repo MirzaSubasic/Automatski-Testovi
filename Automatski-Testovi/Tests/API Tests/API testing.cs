@@ -2,6 +2,7 @@
 using AventStack.ExtentReports;
 using Newtonsoft.Json.Linq;
 using System.Net;
+using RestSharp;
 
 namespace Automatski_Testovi.Tests.API_Tests
 {
@@ -17,7 +18,8 @@ namespace Automatski_Testovi.Tests.API_Tests
             {
                 test = extent.CreateTest("GetPostsReturnsStatusCodeOkTest").Info("GetPostsReturnsStatusCodeOkTest Test Started");
 
-                HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
+                RestRequest request = new RestRequest(baseUrl + "posts");
+                RestResponse response = await client.GetAsync(request);
 
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
                 test.Log(Status.Pass, "GetPostsReturnsStatusCodeOkTest completed successfully");
@@ -36,16 +38,16 @@ namespace Automatski_Testovi.Tests.API_Tests
             {
                 test = extent.CreateTest("GetPostsReturnsNonEmptyBodyTest").Info("GetPostsReturnsNonEmptyBodyTest Test Started");
 
-                HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
+                RestRequest request = new RestRequest(baseUrl + "posts");
+                RestResponse response = await client.GetAsync(request);
 
-                string responseBody = await response.Content.ReadAsStringAsync();
-                JArray posts = JArray.Parse(responseBody);
-                JObject postWithId1 = posts.FirstOrDefault(post => (int)post["id"] == 1) as JObject;
+                JArray jsonResponse = JArray.Parse(response.Content);
+                JObject firstElement = (JObject)jsonResponse[0];
 
-                Assert.That(postWithId1, Is.Not.Null);
-                Assert.That((int)postWithId1["id"], Is.EqualTo(1));
-                Assert.That((string)postWithId1["body"], Is.EqualTo(body));
-                Assert.That((string)postWithId1["title"], Is.EqualTo(title));
+                Assert.That(firstElement, Is.Not.Null);
+                Assert.That((int)firstElement["id"], Is.EqualTo(1));
+                Assert.That((string)firstElement["body"], Is.EqualTo(body));
+                Assert.That((string)firstElement["title"], Is.EqualTo(title));
                 test.Log(Status.Pass, "GetPostsReturnsNonEmptyBodyTest completed successfully");
             }
             catch (Exception ex)
@@ -62,7 +64,9 @@ namespace Automatski_Testovi.Tests.API_Tests
             {
                 test = extent.CreateTest("PostReturnsStatusCodeOkTest").Info("PostReturnsStatusCodeOkTest Test Started");
 
-                HttpResponseMessage response = await client.PostAsync(baseUrl + "posts", PostContent());
+                RestRequest request = new RestRequest(baseUrl + "posts", Method.Post);
+                AddParameters(request);
+                RestResponse response = await client.PostAsync(request);
 
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
                 test.Log(Status.Pass, "PostReturnsStatusCodeOkTest completed successfully");
@@ -81,7 +85,9 @@ namespace Automatski_Testovi.Tests.API_Tests
             {
                 test = extent.CreateTest("DeleteReturnsStatusCodeOkTest").Info("DeleteReturnsStatusCodeOkTest Test Started");
 
-                HttpResponseMessage response = await client.DeleteAsync(baseUrl + "posts/1");
+                RestRequest request = new RestRequest(baseUrl + "posts/1", Method.Delete);
+                RestResponse response = await client.DeleteAsync(request);
+
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
                 test.Log(Status.Pass, "DeleteReturnsStatusCodeOkTest completed successfully");
