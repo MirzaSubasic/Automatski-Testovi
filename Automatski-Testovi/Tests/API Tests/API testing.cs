@@ -6,7 +6,6 @@ using RestSharp;
 
 namespace Automatski_Testovi.Tests.API_Tests
 {
-    //[Parallelizable(ParallelScope.All)]
     [TestFixture]
     public class API_testing : APIBaseClass
     {
@@ -49,6 +48,46 @@ namespace Automatski_Testovi.Tests.API_Tests
                 Assert.That((string)firstElement["body"], Is.EqualTo(body));
                 Assert.That((string)firstElement["title"], Is.EqualTo(title));
                 test.Log(Status.Pass, "GetPostsReturnsNonEmptyBodyTest completed successfully");
+            }
+            catch (Exception ex)
+            {
+                test.Log(Status.Fail, ex.ToString());
+                throw;
+            }
+        }
+
+        [Test]
+        public async Task GetNonExistingPostReturnsEmptyListTest()
+        {
+            try
+            {
+                test = extent.CreateTest("GetNonExistingPostReturnsEmptyListTest").Info("GetNonExistingPostReturnsEmptyListTest Test Started");
+
+                RestRequest request = new RestRequest(baseUrl + "posts/101");
+                RestResponse response = await client.GetAsync(request);
+
+                Assert.That(response.Content, Is.EqualTo("{}"));
+                test.Log(Status.Pass, "GetNonExistingPostReturnsEmptyListTest completed successfully");
+            }
+            catch(Exception ex)
+            {
+                test.Log(Status.Fail, ex.ToString());
+                throw;
+            }
+        }
+
+        [Test]
+        public async Task NotFoundTest()
+        {
+            try
+            {
+                test = extent.CreateTest("NotFoundTest").Info("NotFoundTest Test Started");
+
+                RestRequest request = new RestRequest(baseUrl + "thisPageDoesNotExist");
+                RestResponse response = await client.GetAsync(request);
+
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+                test.Log(Status.Pass, "NotFoundTest completed successfully");
             }
             catch (Exception ex)
             {
