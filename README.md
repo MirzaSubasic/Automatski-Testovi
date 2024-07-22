@@ -18,6 +18,7 @@ NUnit3TestAdapter (4.5.0)
 Selenium.Support (4.22.0)   
 Selenium.WebDriver (4.22.0)   
 Selenium.WebDriver.ChromeDriver (126.0.6478.12600)  
+RestSharp (111.4.0)  
 
 
 ### Demo stranica
