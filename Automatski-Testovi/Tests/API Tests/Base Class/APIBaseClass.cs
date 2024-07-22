@@ -56,16 +56,6 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
             test = extent.CreateTest(testName).Info(testName + " Test Started");
         }
 
-        protected void LogPassingTest(string testName)
-        {
-            test.Log(Status.Pass, testName + "completed successfully");
-        }
-
-        protected void LogFailingTest(Exception ex)
-        {
-            test.Log(Status.Fail, ex.ToString());
-        }
-
         protected HttpContent PostContent()
         {
             var contentObject = new

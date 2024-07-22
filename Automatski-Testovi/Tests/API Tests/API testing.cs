@@ -1,37 +1,40 @@
 ﻿using Automatski_Testovi.Tests.API_Tests.Base_Class;
+using AventStack.ExtentReports;
 using Newtonsoft.Json.Linq;
 using System.Net;
 
 namespace Automatski_Testovi.Tests.API_Tests
 {
-    [Parallelizable(ParallelScope.All)]
+    //[Parallelizable(ParallelScope.All)]
+    //[TestFixture]
     public class API_testing : APIBaseClass
     {
 
         [Test]
-        public async Task GetPostsReturnsStatusCodeOk()
+        public async Task GetPostsReturnsStatusCodeOkTest()
         {
             try
             {
-                StartTest("GetActivitiesReturnsOkStatusCode");
+                StartTest("GetPostsReturnsStatusCodeOkTest");
 
                 HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
 
                 Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-                LogPassingTest("GetPostsReturnsStatusCodeOk");
+                test.Log(Status.Pass, "GetPostsReturnsStatusCodeOkTest completed successfully");
             }
             catch (Exception ex)
             {
-                LogFailingTest(ex);
+                test.Log(Status.Fail, ex.ToString());
+                throw;
             }
         }
 
         [Test]
-        public async Task GetPostsReturnsNonEmptyBody()
+        public async Task GetPostsReturnsNonEmptyBodyTest()
         {
             try
             {
-                StartTest("GetPostsReturnsNonEmptyBody");
+                StartTest("GetPostsReturnsNonEmptyBodyTest");
 
                 HttpResponseMessage response = await client.GetAsync(baseUrl + "posts");
 
@@ -40,31 +43,51 @@ namespace Automatski_Testovi.Tests.API_Tests
                 JObject postWithId1 = posts.FirstOrDefault(post => (int)post["id"] == 1) as JObject;
 
                 Assert.That(postWithId1, Is.Not.Null);
-                LogPassingTest("GetPostsReturnsNonEmptyBody");
+                test.Log(Status.Pass, "GetPostsReturnsNonEmptyBodyTest completed successfully");
             }
             catch (Exception ex)
             {
-                LogFailingTest(ex);
+                test.Log(Status.Fail, ex.ToString());
+                throw;
             }
         }
 
         [Test]
-        public async Task NewPostCanBeCreated()
+        public async Task PostReturnsStatusCodeOkTest()
         {
             try
             {
-                StartTest("NewPostCanBeCreated");
+                StartTest("PostReturnsStatusCodeOkTest");
 
-                HttpResponseMessage response = await client.PostAsync(baseUrl + "posts/1", PostContent());
+                HttpResponseMessage response = await client.PostAsync(baseUrl + "posts", PostContent());
 
-                Assert.That(response.StatusCode, Is.EqualTo((HttpStatusCode)HttpStatusCode.OK));
-                LogPassingTest("NewPostCanBeCreated");
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
+                test.Log(Status.Pass, "PostReturnsStatusCodeOkTest completed successfully");
             }
             catch (Exception ex)
             {
-                LogFailingTest(ex);
+                test.Log(Status.Fail, ex.ToString());
+                throw;
             }
         }
 
+        [Test]
+        public async Task DeleteReturnsStatusCodeOkTest()
+        {
+            try
+            {
+                StartTest("DeleteReturnsStatusCodeOkTest");
+
+                HttpResponseMessage response = await client.DeleteAsync(baseUrl + "posts/1");
+                Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+                test.Log(Status.Pass, "DeleteReturnsStatusCodeOkTest completed successfully");
+            }
+            catch (Exception ex)
+            {
+                test.Log(Status.Fail, ex.ToString());
+                throw;
+            }
+        }
     }
 }
