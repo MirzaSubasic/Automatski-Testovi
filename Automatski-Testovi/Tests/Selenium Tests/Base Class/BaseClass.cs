@@ -5,8 +5,6 @@ using AventStack.ExtentReports.Reporter;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
-using NUnit.Framework;
-using System.IO;
 
 namespace Automatski_Testovi.Tests
 {
@@ -15,7 +13,6 @@ namespace Automatski_Testovi.Tests
         public IWebDriver driver;
 
         public ExtentReports extent { get; set; }
-        public ExtentV3HtmlReporter reporter { get; set; }
         public ExtentTest test { get; set; }
 
         public LoginPage? loginPage;
@@ -29,11 +26,13 @@ namespace Automatski_Testovi.Tests
         [OneTimeSetUp]
         public void Setup()
         {
-            ExtentReportsSetUp();
-
             ChromeDriverSetUp();
 
+            ExtentReportsSetUp();
+
             InitializeClasses();
+
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
         [OneTimeTearDown]
@@ -74,8 +73,8 @@ namespace Automatski_Testovi.Tests
         {
             string filePath = $"C:\\Users\\{Environment.UserName}\\Downloads\\ExtentReport.html";
 
-            reporter = new ExtentV3HtmlReporter(filePath);
-            extent = new ExtentReports();
+            ExtentSparkReporter reporter = new ExtentSparkReporter(filePath);
+            extent = new ExtentReports(); 
 
             reporter.Config.DocumentTitle = "Automation Testing Report";
             reporter.Config.ReportName = "Automation Testing Task";

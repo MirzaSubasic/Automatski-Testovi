@@ -1,7 +1,5 @@
 ﻿using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports;
-using System.Text;
-using Newtonsoft.Json;
 using RestSharp;
 
 namespace Automatski_Testovi.Tests.API_Tests.Base_Class
@@ -15,7 +13,7 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
         public RestClient client;
 
         public ExtentReports extent { get; set; }
-        public ExtentV3HtmlReporter reporter { get; set; }
+        public ExtentReports extentReports { get; set; }
         public ExtentTest test { get; set; }
 
         public string baseUrl { get; set; } = "https://jsonplaceholder.typicode.com/";
@@ -31,17 +29,17 @@ namespace Automatski_Testovi.Tests.API_Tests.Base_Class
 
 
         [OneTimeTearDown]
-        public void TearDown() 
-        { 
-            client.Dispose(); 
+        public void TearDown()
+        {
             ExtentReportsTearDown();
+            client.Dispose(); 
         }
 
         private void ExtentReportsSetUp()
         {
             string filePath = $"C:\\Users\\{Environment.UserName}\\Downloads\\ExtentReport API.html";
 
-            reporter = new ExtentV3HtmlReporter(filePath);
+            ExtentSparkReporter reporter = new ExtentSparkReporter(filePath);
             extent = new ExtentReports();
 
             reporter.Config.DocumentTitle = "Automation Testing Report";

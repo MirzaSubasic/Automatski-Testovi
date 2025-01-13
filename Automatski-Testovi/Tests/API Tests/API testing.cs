@@ -10,7 +10,7 @@ namespace Automatski_Testovi.Tests.API_Tests
     public class API_testing : APIBaseClass
     {
 
-        [Test]
+        [Test, Order(1)]
         public async Task GetPostsReturnsStatusCodeOkTest()
         {
             try
@@ -30,7 +30,7 @@ namespace Automatski_Testovi.Tests.API_Tests
             }
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task GetPostsReturnsNonEmptyBodyTest()
         {
             try
@@ -96,7 +96,7 @@ namespace Automatski_Testovi.Tests.API_Tests
             }
         }
 
-        [Test]
+        [Test, Order(3)]
         public async Task PostReturnsStatusCodeOkTest()
         {
             try
@@ -117,7 +117,7 @@ namespace Automatski_Testovi.Tests.API_Tests
             }
         }
 
-        [Test]
+        [Test, Order(4)]
         public async Task DeleteReturnsStatusCodeOkTest()
         {
             try
